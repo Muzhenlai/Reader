@@ -95,13 +95,47 @@
     </div>
   </div>
 <script src="lib/zepto.min.js"></script>
+<!--保证jQuery插件可用-->
 <script>
   window.jQuery = $;
 </script>
 <script src="js/jquery.base64.js"></script>
 <script src="js/jquery.jsonp.js"></script>
 <script>
+  (function(){
+    var Util = (function(){
+      var prefix = 'reader_';//防止同一域名下的误操作覆盖key
+      var StorageGetter = function(key){
+        return localStorage.getItem(prefix + key);
+      };
+      var StorageSetter = function(key,val){
+        return localStorage.setItem(prefix+key,val);
+      };
+      return {
+        StorageGetter:StorageGetter,
+        StorageSetter:StorageSetter
+      };
 
+      function main(){
+        //TODO 项目入口
+      }
+
+      function ReaderModel(){
+        //TODO 数据交互方法
+      }
+
+      function ReaderBaseFrame(){
+        //TODO 初始化页面结构
+      }
+
+      function EventHanlder(){
+        //TODO 交互事件绑定
+      }
+
+      main();
+
+    })();
+  })();
 </script>
 </body>
 </html>
