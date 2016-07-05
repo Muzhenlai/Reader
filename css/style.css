@@ -177,3 +177,75 @@ body {
   right: 54px;
   color:#d5d5d6;
 }
+/*切换样式面板*/
+.nav-pannel-bg{
+  position: fixed;
+  z-index: 10000;
+  bottom: 60px;
+  width: 100%;
+  height: 135px;
+  background: #000;
+  opacity: 0.8;
+}
+.nav-pannel{
+  position: fixed;
+  z-index: 10001;
+  bottom: 130px;
+  width: 100%;
+  height: 60px;
+  background: none;
+  color: #fff;
+}
+/*大小*/
+.child-mod{
+  margin: 15px;
+  padding: 5px 10px;
+}
+.child-mod span{
+  display: inline-block;
+  padding-right: 20px;
+  padding-left: 10px;
+}
+.font-size-button{
+  padding:5px 40px;
+  color: #fff;
+  border:1px #8c8c8c solid;
+  border-radius: 16px;
+  background: none;
+}
+.child-mod button:nth-child(2){
+  margin-right: 10px;
+}
+/*背景*/
+.bg-container{
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: #fff;
+  vertical-align: -14px;
+}
+.bg-container-current{
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border:1px #ff7800 solid;
+  border-radius: 50%;
+}
+.bg-container:nth-of-type(2) .bg-container-current{
+  background: #452221;
+}
+.bg-container:nth-of-type(3) .bg-container-current{
+  background: #009900;
+}
+.bg-container:nth-of-type(4) .bg-container-current{
+  background: #669977;
+}
+.bg-container:nth-of-type(5) .bg-container-current{
+  background: #884488;
+}
