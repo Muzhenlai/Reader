@@ -127,10 +127,18 @@
       bottom_nav: $('#footer'),
       theme_switch: $('#theme_switch'),
       theme_pannel: $('.js_bottom_theme'),
-      bottom_font:$('.icon-normal')
+      bottom_font:$('.icon-normal'),
+      bg_container:$('.bg-container')
     };
     var Win = $(window);
     var Doc = $(document);
+    var PageContainer = $('#fiction_container');
+    var initFontSize = Util.StorageGetter('font-size');
+    initFontSize = parseInt(initFontSize);
+    if(!initFontSize){
+      initFontSize = 10;
+    }
+    PageContainer.css('font-size',initFontSize);
 
     function main() {
       //TODO 项目入口
@@ -160,11 +168,6 @@
           Dom.bottom_font.removeClass('icon-orange');
         }
       });
-      Win.scroll(function(){
-          Dom.top_nav.hide();
-          Dom.bottom_nav.hide();
-          Dom.theme_pannel.hide();
-      });
       //唤出字体背景面板
       $('#font-button').click(function(){
         if(Dom.theme_pannel.css('display') === 'none'){
@@ -176,8 +179,38 @@
           Dom.bottom_font.removeClass('icon-orange');
         }
       });
+      //夜间白天模式切换
       Dom.theme_switch.click(function(){
         //TODO 触发背景切换事件
+      });
+      //背景切换事件
+      Dom.bg_container.click(function(){
+        console.log($(this).css('background-color'));
+      });
+
+      //放大缩小字体
+      $('#large-font').click(function(){
+        if(initFontSize > 19){
+          return;
+        }
+        initFontSize += 1;
+        PageContainer.css('font-size',initFontSize);
+        Util.StorageSetter('font-size',initFontSize);
+      });
+      $('#small-font').click(function(){
+        if(initFontSize <= 8){
+          return;
+        }
+        initFontSize -= 1;
+        PageContainer.css('font-size',initFontSize);
+        Util.StorageSetter('font-size',initFontSize);
+      });
+
+      Win.scroll(function(){
+        Dom.top_nav.hide();
+        Dom.bottom_nav.hide();
+        Dom.theme_pannel.hide();
+        Dom.bottom_font.removeClass('icon-orange');
       });
     }
     main();
