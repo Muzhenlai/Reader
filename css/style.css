@@ -159,9 +159,6 @@ body {
   color:#d5d5d6;
 }
 /*夜间*/
-.night{
-  display: none;
-}
 .icon-night{
   position: absolute;
   top: 11px;
@@ -247,5 +244,13 @@ body {
   background: #669977;
 }
 .bg-container:nth-of-type(5) .bg-container-current{
-  background: #884488;
+  background: #333;
+}
+/*控制文章点击区域*/
+.artical-action-mid{
+  position: fixed;
+  z-index: 10002;
+  top:30%;
+  width: 100%;
+  height: 40%;
 }

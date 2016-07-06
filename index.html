@@ -11,8 +11,12 @@
 <body>
   <!--文章容器-->
   <div id="root" class="container">
+    <!--响应用户点击-->
+    <div class="m-artical-action">
+      <div id="action-mid" class="artical-action-mid"></div>
+    </div>
     <!--顶部导航-->
-    <div id="top-nav" class="top-nav">
+    <div id="top-nav" class="top-nav" style="display: none">
       <div class="icon-back"></div>
       <div class="nav-title">返回书架</div>
     </div>
@@ -44,8 +48,8 @@
       </ul>
     </div>
     <!--切换主题-->
-    <div class="nav-pannel-bg"></div>
-    <div id="font-container" class="nav-pannel">
+    <div class="nav-pannel-bg js_bottom_theme" style="display: none;"></div>
+    <div class="nav-pannel js_bottom_theme" id="font-container"  style="display: none;">
       <div class="child-mod">
         <span>字号</span>
         <button id="large-font" class="font-size-button">大</button>
@@ -70,24 +74,24 @@
         </div>
       </div>
     </div>
-    <div id="footer" class="footer">
+    <div id="footer" class="footer" style="display: none;">
       <!--目录-->
       <div>
         <div class="icon-list"></div>
         <div class="list-title">目录</div>
       </div>
       <!--字体-->
-      <div>
+      <div id="font-button">
         <div class="icon-normal"></div>
         <div class="font-title">字体</div>
       </div>
       <!--day or night-->
-      <div>
-        <div class="day">
+      <div id="theme_switch">
+        <div id="day" class="day">
           <div class="icon-day"></div>
           <div class="day-title">白天</div>
         </div>
-        <div class="night">
+        <div id="night" class="night" style="display: none">
           <div class="icon-night"></div>
           <div class="night-title">夜间</div>
         </div>
@@ -102,39 +106,81 @@
 <script src="js/jquery.base64.js"></script>
 <script src="js/jquery.jsonp.js"></script>
 <script>
-  (function(){
-    var Util = (function(){
+  (function () {
+    //工具类
+    var Util = (function () {
       var prefix = 'reader_';//防止同一域名下的误操作覆盖key
-      var StorageGetter = function(key){
+      var StorageGetter = function (key) {
         return localStorage.getItem(prefix + key);
       };
-      var StorageSetter = function(key,val){
-        return localStorage.setItem(prefix+key,val);
+      var StorageSetter = function (key, val) {
+        return localStorage.setItem(prefix + key, val);
       };
       return {
-        StorageGetter:StorageGetter,
-        StorageSetter:StorageSetter
-      };
-
-      function main(){
-        //TODO 项目入口
+        StorageGetter: StorageGetter,
+        StorageSetter: StorageSetter
       }
-
-      function ReaderModel(){
-        //TODO 数据交互方法
-      }
-
-      function ReaderBaseFrame(){
-        //TODO 初始化页面结构
-      }
-
-      function EventHanlder(){
-        //TODO 交互事件绑定
-      }
-
-      main();
-
     })();
+    //常量
+    var Dom = {
+      top_nav: $('#top-nav'),
+      bottom_nav: $('#footer'),
+      theme_switch: $('#theme_switch'),
+      theme_pannel: $('.js_bottom_theme'),
+      bottom_font:$('.icon-normal')
+    };
+    var Win = $(window);
+    var Doc = $(document);
+
+    function main() {
+      //TODO 项目入口
+      EventHanlder();
+    }
+
+    function ReaderModel() {
+      //TODO 数据交互方法
+    }
+
+    function ReaderBaseFrame() {
+      //TODO 初始化页面结构
+    }
+
+    function EventHanlder() {
+      //TODO 交互事件绑定
+      //唤出上下边栏
+      $('#action-mid').click(function () {
+        if (Dom.top_nav.css('display') === 'none') {
+          Dom.top_nav.show();
+          Dom.bottom_nav.show();
+        }
+        else {
+          Dom.top_nav.hide();
+          Dom.bottom_nav.hide();
+          Dom.theme_pannel.hide();
+          Dom.bottom_font.removeClass('icon-orange');
+        }
+      });
+      Win.scroll(function(){
+          Dom.top_nav.hide();
+          Dom.bottom_nav.hide();
+          Dom.theme_pannel.hide();
+      });
+      //唤出字体背景面板
+      $('#font-button').click(function(){
+        if(Dom.theme_pannel.css('display') === 'none'){
+          Dom.theme_pannel.show();
+          Dom.bottom_font.addClass('icon-orange');
+        }
+        else {
+          Dom.theme_pannel.hide();
+          Dom.bottom_font.removeClass('icon-orange');
+        }
+      });
+      Dom.theme_switch.click(function(){
+        //TODO 触发背景切换事件
+      });
+    }
+    main();
   })();
 </script>
 </body>
