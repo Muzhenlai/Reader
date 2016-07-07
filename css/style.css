@@ -231,19 +231,25 @@ body {
   display: inline-block;
   width: 32px;
   height: 32px;
-  border:1px #ff7800 solid;
   border-radius: 50%;
 }
+.bg-current-border{
+  border:1px #ff7800 solid!important;
+}
 .bg-container:nth-of-type(2) .bg-container-current{
+  border:0;
   background: #452221;
 }
 .bg-container:nth-of-type(3) .bg-container-current{
+  border:0;
   background: #009900;
 }
 .bg-container:nth-of-type(4) .bg-container-current{
+  border:0;
   background: #669977;
 }
 .bg-container:nth-of-type(5) .bg-container-current{
+  border:0;
   background: #333;
 }
 /*控制文章点击区域*/
