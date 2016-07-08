@@ -133,6 +133,8 @@
 
     var Win = $(window);
     var Doc = $(document);
+    var readerModel;
+    var readerUI;
     var PageContainer = $('#fiction_container');
     var initFontSize = Util.StorageGetter('font-size');
     //初始字体
@@ -153,8 +155,8 @@
 
     function main() {
       //TODO 项目入口
-      var readerModel = ReaderModel();
-      var readerUI = ReaderBaseFrame(PageContainer);
+      readerModel = ReaderModel();
+      readerUI = ReaderBaseFrame(PageContainer);
       readerModel.init(function(data){
           readerUI(data);
       });
@@ -163,6 +165,7 @@
     function ReaderModel() {
       //TODO 数据交互方法
       var Chapter_id;
+      var ChapterTotal;
       var init = function(UIcallback){
         getFictionInfo(function(){
           getCurChapterContent(Chapter_id,function(data){
@@ -173,12 +176,14 @@
       };
       var getFictionInfo = function(callback){
         $.get('data/chapter.json',function(data){
-          //TODO 获得章节信息的回调
+          //TODO 获得章节信息
           Chapter_id = data.chapters[1].chapter_id;
+          ChapterTotal = data.chapters.length//保存所有章节数
           callback && callback();
         },'json');
       };
       var getCurChapterContent = function(chapter_id,callback){
+        //TODO 或得当前章节内容
         $.get('data/data' + chapter_id + '.json',function(data){
           if(data.result == 0){
             var url = data.jsonp;
@@ -188,8 +193,26 @@
           }
         },'json');
       };
+      var prevChapter = function(UIcallback){
+        Chapter_id = parseInt(Chapter_id,10);
+        if(Chapter_id == 0){
+          return;
+        }
+        Chapter_id -= 1;
+        getCurChapterContent(Chapter_id,UIcallback);
+      };
+      var nextChapter = function(UIcallback){
+        Chapter_id = parseInt(Chapter_id,10);
+        if(Chapter_id == ChapterTotal){
+          return;
+        }
+        Chapter_id += 1;
+        getCurChapterContent(Chapter_id,UIcallback);
+      };
       return {
-        init : init
+        init : init,
+        prevChapter : prevChapter,
+        nextChapter : nextChapter
       }
     }
 
@@ -290,25 +313,39 @@
         Util.StorageSetter('font-size',initFontSize);
       });
 
+      //变更阅读背景
+      function changeTheme(index){
+        $('#root').css('background-color',Bg_Color[index]);
+        if(index === 4){
+          $('#day').hide();
+          $('#night').show();
+        }
+        else {
+          $('#day').show();
+          $('#night').hide();
+        }
+        Util.StorageSetter('bg-theme-color',Bg_Color[index]);
+      }
+
       Win.scroll(function(){
         Dom.top_nav.hide();
         Dom.bottom_nav.hide();
         Dom.theme_pannel.hide();
         Dom.bottom_font.removeClass('icon-orange');
       });
-    }
-    //变更阅读背景
-    function changeTheme(index){
-      $('#root').css('background-color',Bg_Color[index]);
-      if(index === 4){
-        $('#day').hide();
-        $('#night').show();
-      }
-      else {
-        $('#day').show();
-        $('#night').hide();
-      }
-      Util.StorageSetter('bg-theme-color',Bg_Color[index]);
+
+      $('#prev_button').click(function(data){
+        //TODO 获取前一章数据->渲染到Dom文档
+        readerModel.prevChapter(function(data){
+          readerUI(data);
+        });
+      });
+      $('#next_button').click(function(){
+        //TODO 获取后一章数据->渲染到Dom文档
+        readerModel.nextChapter(function(data){
+          readerUI(data);
+        });
+      });
     }
     main();
   })();
