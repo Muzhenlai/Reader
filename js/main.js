@@ -48,6 +48,21 @@
   var readerUI;
   var PageContainer = $('#fiction_container');
   var initFontSize = Util.StorageGetter('font-size');
+
+  //变更阅读背景
+  function changeTheme(index){
+    $('#root').css('background-color',Bg_Color[index]);
+    if(index === 4){
+      $('#day').hide();
+      $('#night').show();
+    }
+    else {
+      $('#day').show();
+      $('#night').hide();
+    }
+    Util.StorageSetter('bg-theme-color',Bg_Color[index]);
+  }
+
   //初始字体
   initFontSize = parseInt(initFontSize);
   if(!initFontSize){
@@ -223,20 +238,6 @@
       PageContainer.css('font-size',initFontSize);
       Util.StorageSetter('font-size',initFontSize);
     });
-
-    //变更阅读背景
-    function changeTheme(index){
-      $('#root').css('background-color',Bg_Color[index]);
-      if(index === 4){
-        $('#day').hide();
-        $('#night').show();
-      }
-      else {
-        $('#day').show();
-        $('#night').hide();
-      }
-      Util.StorageSetter('bg-theme-color',Bg_Color[index]);
-    }
 
     Win.scroll(function(){
       Dom.top_nav.hide();
